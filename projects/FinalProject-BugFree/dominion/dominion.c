@@ -401,7 +401,7 @@ int isGameOver(struct gameState *state) {
 
     //if three supply pile are at 0, the game ends
     j = 0;
-    for (i = 0; i < state.handCount[0]; i++)
+    for (i = 0; i < state->handCount[0]; i++)
     {
         if (state->supplyCount[i] == 0)
         {
@@ -1077,7 +1077,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
                 drawCard(currentPlayer, state);
                 drawCard(currentPlayer, state);
             }
-            else { //Action Card
+            else if(tributeRevealedCards[i] != curse && tributeRevealedCards[i] != -1) { //Action Card
                 state->numActions = state->numActions + 2;
             }
         }
@@ -1099,7 +1099,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
         for (i = 0; i < state->handCount[currentPlayer]; i++)
         {
-            if (i != handPos && i == state->hand[currentPlayer][choice1] && i != choice1)
+            if (i != handPos && state->hand[currentPlayer][i] == state->hand[currentPlayer][choice1] && i != choice1)
             {
                 j++;
             }
@@ -1134,7 +1134,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
             {
                 if (state->hand[currentPlayer][i] == state->hand[currentPlayer][choice1])
                 {
-                    discardCard(i, currentPlayer, state, 1);
+                    discardCard(i, currentPlayer, state, 0);
                     break;
                 }
             }
